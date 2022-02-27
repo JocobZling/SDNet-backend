@@ -1,0 +1,36 @@
+photoAddr: /data/ThreePigs/photo/
+faceAddr: /data/ThreePigs/face/
+ak: 5549b42e7a644bbbbdd932f73fa20ef7
+sk: 172e10898d364ca89c2bd4ecc824bc10
+imageUrl: http://1.117.165.170:8080/images/
+
+
+database:
+  url: jdbc:mysql://localhost:3306/threepigs?useUnicode=true&characterEncoding=utf-8
+  username: root
+  password: pass
+spring:
+  cloud:
+    config:
+      enabled: false
+  datasource:
+    url: ${database.url}
+    username: ${database.username}
+    password: ${database.password}
+    driver-class-name: com.mysql.jdbc.Driver
+  jpa:
+    hibernate:
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+  application:
+    name: ThreePigs
+  servlet:
+    multipart:
+      max-file-size: 500MB
+      max-request-size: 1000MB
+server:
+  port: 8080
+
+spring.mvc.static-path-pattern: /images/**
+spring.resources.static-locations: file:/data/ThreePigs/photo/,file:/data/ThreePigs/face/
+
