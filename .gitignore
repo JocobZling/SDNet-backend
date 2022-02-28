@@ -10,6 +10,8 @@
 # production
 /build
 
+#/src/main/resources/application.yml
+
 # misc
 .DS_Store
 .env.local

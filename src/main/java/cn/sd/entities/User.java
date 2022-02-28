@@ -24,8 +24,6 @@ public class User {
     private String email;
     @JsonProperty("password")
     private String password;
-    @JsonProperty("airSetId")
-    private String airSetId;
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
     private Date
             createTime = new Date();

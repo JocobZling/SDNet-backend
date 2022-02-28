@@ -17,12 +17,10 @@ import java.util.UUID;
 public class UserCenterService {
 
     private final UserRepository userRepository;
-    private final FaceService faceService;
 
     @Autowired
-    public UserCenterService(UserRepository userRepository, FaceService faceService) {
+    public UserCenterService(UserRepository userRepository) {
         this.userRepository = userRepository;
-        this.faceService = faceService;
     }
 
     public HashMap<String, Object> findUserByEmailAndPasswordOrThrow(String email, String password) throws BusinessException, UnsupportedEncodingException {
@@ -43,19 +41,12 @@ public class UserCenterService {
         user.setEmail(info.getEmail());
         user.setPassword(info.getPassword());
         user.setName(info.getName());
-        String faceSetId = faceService.createFaceSet(UUID.randomUUID().toString().replaceAll("-", "").substring(0, 10));
-        user.setAirSetId(String.valueOf(Double.valueOf(faceSetId).intValue()));
         return userRepository.save(user);
     }
 
     public Boolean isUserExits(String email) {
         List<User> user = userRepository.findByEmail(email);
         return user.size() != 0;
-    }
-
-    public String findAirSetIdByUserId(Long userId) throws BusinessException {
-        User user = userRepository.findById(userId).orElseThrow(() -> new BusinessException("用户不存在"));
-        return user.getAirSetId();
     }
 
 }

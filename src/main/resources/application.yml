@@ -1,12 +1,5 @@
-photoAddr: D:/ThreePigProject/photo/
-faceAddr: D:/ThreePigProject/face/
-ak: 5549b42e7a644bbbbdd932f73fa20ef7
-sk: 172e10898d364ca89c2bd4ecc824bc10
-imageUrl: http://jocobzling2.cd.aeert.com/images/
-
-
 database:
-  url: jdbc:mysql://localhost:3306/threepigs?useUnicode=true&characterEncoding=utf-8
+  url: jdbc:mysql://localhost:3306/sdnet?useUnicode=true&characterEncoding=utf-8
   username: root
   password: pass
 spring:
@@ -23,7 +16,7 @@ spring:
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
   application:
-    name: ThreePigs
+    name: SDBackend
   servlet:
     multipart:
       max-file-size: 500MB
@@ -31,8 +24,6 @@ spring:
 server:
   port: 8080
 
-spring.mvc.static-path-pattern: /images/**
-spring.resources.static-locations: file:D://ThreePigProject/photo/,file:D://ThreePigProject/face/
 
 
 
