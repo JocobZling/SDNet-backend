@@ -14,11 +14,13 @@ import java.util.HashMap;
 
 
 @RestController
+@CrossOrigin(origins = "http://localhost:3000/", maxAge = 3600)
 @RequestMapping(value = "/api/users")
 public class UserController {
 
     private final UserCenterService userCenterService;
 
+    // 构造方法
     @Autowired
     public UserController(UserCenterService userCenterService) {
         this.userCenterService = userCenterService;
@@ -41,7 +43,7 @@ public class UserController {
 
     @GetMapping("")
     public ResponseEntity<String> getUser() {
-        return ResponseEntity.ok("123");
+        return ResponseEntity.ok("okok123321");
     }
 
 }
