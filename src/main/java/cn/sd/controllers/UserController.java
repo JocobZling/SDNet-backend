@@ -14,7 +14,6 @@ import java.util.HashMap;
 
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000/", maxAge = 3600)
 @RequestMapping(value = "/api/users")
 public class UserController {
 

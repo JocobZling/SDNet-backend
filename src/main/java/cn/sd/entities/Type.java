@@ -4,7 +4,10 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.util.Date;
 
 @Setter
@@ -13,21 +16,12 @@ import java.util.Date;
 @AllArgsConstructor
 @Builder
 @Entity
-public class User {
+public class Type {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @JsonProperty("name")
-    private String name;
-    @JsonProperty("email")
-    private String email;
-    @JsonProperty("password")
-    private String password;
+    @JsonProperty("typeName")
+    private String typeName;
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
     private Date createTime = new Date();
-
-    public User hidePassword() {
-        this.password = "";
-        return this;
-    }
 }
