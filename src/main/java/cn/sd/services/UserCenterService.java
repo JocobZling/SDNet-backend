@@ -44,6 +44,7 @@ public class UserCenterService {
         return userRepository.save(user);
     }
 
+    // 只要邮箱不冲突就可以注册
     public Boolean isUserExits(String email) {
         List<User> user = userRepository.findByEmail(email);
         return user.size() != 0;

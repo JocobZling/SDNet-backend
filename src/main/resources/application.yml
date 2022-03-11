@@ -1,7 +1,7 @@
 database:
   url: jdbc:mysql://localhost:3306/sdnet?useUnicode=true&characterEncoding=utf-8
   username: root
-  password: pass
+  password: '0911'
 spring:
   cloud:
     config:
