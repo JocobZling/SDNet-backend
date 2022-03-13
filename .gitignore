@@ -9,7 +9,7 @@
 
 # production
 /build
-
+/upload
 #/src/main/resources/application.yml
 
 # misc

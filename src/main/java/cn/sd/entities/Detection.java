@@ -27,6 +27,9 @@ public class Detection {
     @JsonProperty("pictureTwoPosition")
     private String pictureTwoPosition;
 
+    @JsonProperty("originalImagePosition")
+    private String originalImagePosition;
+
     @JsonProperty("result")
     private String result;
 
@@ -47,6 +50,5 @@ public class Detection {
     @JsonProperty("createTime")
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
     private Date createTime = new Date();
-
 }
 

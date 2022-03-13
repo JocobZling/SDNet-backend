@@ -2,7 +2,7 @@ package cn.sd.services;
 
 import cn.sd.entities.User;
 import cn.sd.exceptions.BusinessException;
-import cn.sd.services.repositories.UserRepository;
+import cn.sd.repositories.UserRepository;
 import cn.sd.utils.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
