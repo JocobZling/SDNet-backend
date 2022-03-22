@@ -1,7 +1,14 @@
+<<<<<<< HEAD
 uploadAddr: D:/project/SDNet/SDNet-backend/upload
 encryptedImagePosition: D:/pythonStudy/zlProject/JavaSystemFile/randomImageDisplay.py
 detectionPosition: D:/pythonStudy/zlProject/wuwei/MultiResNet/Main_java.py
 environmentPosition: D:/anaconda3/envs/zl/python.exe
+=======
+uploadAddr: D:/SDNet/upload
+detectPosition: D:/SDNet-backend/src/pycodes/randomImageDisplay.py
+histPosition: D:/SDNet-backend/src/pycodes/histDisplay.py
+environmentPosition: D:/Anaconda3/python.exe
+>>>>>>> 86f9e40 (analysis updated)
 imageUrl: http://127.0.0.1:8080/images/
 
 database:
@@ -36,6 +43,4 @@ server:
   port: 8080
 
 spring.mvc.static-path-pattern: /images/**
-spring.resources.static-locations: file:D://project/SDNet/SDNet-backend/upload/
-
-
+spring.resources.static-locations: file:D:/SDNet/upload
