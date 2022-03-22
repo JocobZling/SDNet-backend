@@ -11,4 +11,5 @@ public class ImageDisplayVo {
     private String pictureOnePosition;
     private String pictureTwoPosition;
     private String originalImagePosition;
+    private Long detectionId;
 }

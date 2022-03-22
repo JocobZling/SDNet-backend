@@ -1,12 +1,13 @@
 uploadAddr: D:/project/SDNet/SDNet-backend/upload
-detectPosition: D:/pythonStudy/zlProject/JavaSystemFile/randomImageDisplay.py
+encryptedImagePosition: D:/pythonStudy/zlProject/JavaSystemFile/randomImageDisplay.py
+detectionPosition: D:/pythonStudy/zlProject/wuwei/MultiResNet/Main_java.py
 environmentPosition: D:/anaconda3/envs/zl/python.exe
 imageUrl: http://127.0.0.1:8080/images/
 
 database:
   url: jdbc:mysql://localhost:3306/sdnet?useUnicode=true&characterEncoding=utf-8
   username: root
-  password: '0911'
+  password: 'pass'
 spring:
   cloud:
     config:
@@ -16,6 +17,10 @@ spring:
     username: ${database.username}
     password: ${database.password}
     driver-class-name: com.mysql.jdbc.Driver
+  redis:
+    database: 0
+    host: 127.0.0.1
+    port: 6379
   jpa:
     hibernate:
       naming:
