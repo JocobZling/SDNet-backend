@@ -24,16 +24,16 @@ public class AnalysisService {
     @Value("${environmentPosition}")
     private String environmentPosition;
 
-    private final SplicingService splicingService;
+    private final FaceService faceService;
 
-    public AnalysisService(SplicingService splicingService) {
-        this.splicingService = splicingService;
+    public AnalysisService(FaceService faceService) {
+        this.faceService = faceService;
     }
 
     public AnalysisVo histImage(MultipartFile file) throws Exception {
         AnalysisVo analysisVo = new AnalysisVo();
         assert file != null;
-        ImageDisplayVo imageDisplayVo = splicingService.encryptedImage(file, 1L);
+        ImageDisplayVo imageDisplayVo = faceService.encryptedImage(file, 1L);
         // 原图
         String originUrl = imageDisplayVo.getOriginalImagePosition();
         String originPath = uploadAddr + "/" + originUrl.substring(originUrl.lastIndexOf("/") + 1);
