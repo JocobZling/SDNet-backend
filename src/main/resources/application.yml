@@ -1,16 +1,15 @@
-uploadAddr: D:/SDNet/upload
-detectPosition: D:/SDNet-backend/src/pycodes/randomImageDisplay.py
-histPosition: D:/SDNet-backend/src/pycodes/histDisplay.py
-environmentPosition: D:/Anaconda3/python.exe
-encryptedImagePosition: D:/SDNet-backend/src/pycodes/randomImageDisplay.py
-detectionPosition: D:/SDNet-backend/src/pycodes/Main_java.py
+uploadAddr: D:/project/SDNet/SDNet-backend/upload
+histPosition: D:/project/SDNet/SDNet-backend/src/pycodes/histDisplay.py
+environmentPosition: D:/anaconda3/envs/zl/python.exe
+encryptedImagePosition: D:/project/SDNet/SDNet-backend/src/pycodes/randomImageDisplay.py
+detectionPosition: D:/project/SDNet/SDNet-backend/src/pycodes/Main_java.py
 imageUrl: http://127.0.0.1:8080/images/
 
 
 database:
   url: jdbc:mysql://localhost:3306/sdnet?useUnicode=true&characterEncoding=utf-8
   username: root
-  password: '0911'
+  password: 'pass'
 spring:
   cloud:
     config:
@@ -39,4 +38,4 @@ server:
   port: 8080
 
 spring.mvc.static-path-pattern: /images/**
-spring.resources.static-locations: file:D:/SDNet/upload
+spring.resources.static-locations: file:D:/project/SDNet/SDNet-backend/upload

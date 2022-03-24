@@ -20,8 +20,8 @@ public class SplicingService {
     @Value("${uploadAddr}")
     private String uploadAddr;
 
-    @Value("${detectPosition}")
-    private String detectPosition;
+    @Value("${encryptedImagePosition}")
+    private String encryptedImagePosition;
 
     @Value("${environmentPosition}")
     private String environmentPosition;
@@ -62,7 +62,7 @@ public class SplicingService {
         Process proc;
         try {
             //此处的python环境
-            String[] arguments = new String[]{environmentPosition, detectPosition, imagePath[0], imagePath[1], imagePath[2]};
+            String[] arguments = new String[]{environmentPosition, encryptedImagePosition, imagePath[0], imagePath[1], imagePath[2]};
             proc = Runtime.getRuntime().exec(arguments);
             BufferedReader in = new BufferedReader(new InputStreamReader(proc.getInputStream()));
             String line = null;

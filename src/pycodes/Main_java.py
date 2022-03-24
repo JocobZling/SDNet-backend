@@ -193,7 +193,7 @@ def random_c():
 def getModel():
     resNet50 = MyResNet50.ResNet50()
     resNet50.load_state_dict(
-        torch.load(r'D:\pythonStudy\zlProject\wuwei\MultiResNet\newModel\DeepFakesepoch58.pkl', map_location='cpu'))
+        torch.load(r'D:\project\SDNet\SDNet-backend\src\pycodes\model\deepfakeepoch13.pkl', map_location='cpu'))
     return resNet50
 
 
@@ -1653,7 +1653,7 @@ if __name__ == '__main__':
                                      conv4_2_1, bn4_2_1, conv4_2_2, bn4_2_2, conv4_2_3, bn4_2_3,
                                      conv4_3_1, bn4_3_1, conv4_3_2, bn4_3_2, conv4_3_3, bn4_3_3, fc, detectionId)
 
-    net_path = r'D:\PyCharm_workspace\MultiResNet\newModel\DeepFakesepoch58.pkl'
+    net_path = r'D:\project\SDNet\SDNet-backend\src\pycodes\model\deepfakeepoch13.pkl'
 
     resnet50 = torchvision.models.resnet50(pretrained=False)
     fc_featrue = resnet50.fc.in_features
@@ -1662,16 +1662,6 @@ if __name__ == '__main__':
     resnet50.load_state_dict(torch.load(net_path, map_location="cpu"))
     out = resnet50(img)
     result = results0 + results1
-    json_path = 'D:\pythonStudy\JavaWithPythonTest\class_indices.json'
-    assert os.path.exists(json_path), "file: '{}' dose not exist.".format(json_path)
-    #
-    json_file = open(json_path, "r")
-    class_indict = json.load(json_file)
-
-    predict_cla = torch.argmax(result).numpy()
-    #
-    # print_res = "class: {}   prob: {:.3}".format(class_indict[str(predict_cla)],
-    #                                              result[predict_cla].numpy())
 
     res1 = results0.numpy()[0].tolist()
     print([float('{:.4f}'.format(i)) for i in res1])
