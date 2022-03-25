@@ -4,6 +4,8 @@ import cn.sd.entities.User;
 import cn.sd.entities.vo.UserEmailAndPassword;
 import cn.sd.exceptions.BusinessException;
 import cn.sd.services.UserCenterService;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
+import java.util.Map;
 
 
 @RestController
@@ -38,6 +41,26 @@ public class UserController {
         }
         User result = userCenterService.isRegisterUser(info);
         return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+    @ApiImplicitParams({@ApiImplicitParam( required = true, dataType = "Long", paramType = "path")
+    })
+    @PutMapping("/password/{userId}")
+
+    public ResponseEntity updatePassword(@PathVariable String userId,@RequestBody Map passwordMap){
+        Long id=Long.parseLong(userId);
+        try{
+            return new ResponseEntity(
+                    userCenterService.authUserOldPasswordUpdatePassword(id,
+                            passwordMap.get("oldPassword").toString(),
+                            passwordMap.get("newPassword").toString()),
+            HttpStatus.NO_CONTENT);
+        }catch (BusinessException e) {
+            return new ResponseEntity<>("旧密码错误", HttpStatus.BAD_GATEWAY);
+        }
+    }
+    @PutMapping("/profile/{userId}")
+    public ResponseEntity updateUserById(@PathVariable Long userId,@RequestBody User user)throws BusinessException,UnsupportedEncodingException{
+        return new ResponseEntity(userCenterService.updateUserById(userId,user),HttpStatus.OK);
     }
 
     @GetMapping("")
