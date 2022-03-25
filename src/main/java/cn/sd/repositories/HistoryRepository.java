@@ -1,4 +1,4 @@
-package cn.sd.services.repositories;
+package cn.sd.repositories;
 
 import cn.sd.entities.Detection;
 import org.springframework.data.domain.Page;
