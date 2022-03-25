@@ -50,4 +50,24 @@ public class UserCenterService {
         return user.size() != 0;
     }
 
+    public User authUserOldPasswordUpdatePassword(Long userId,String oldPassword,String newPassword)throws BusinessException{
+        User foundUser=userRepository.findByIdAndPassword(userId,oldPassword).orElseThrow(
+                ()->new BusinessException("旧密码错误")
+        );
+        foundUser.updatePassword(newPassword);
+        return userRepository.save(foundUser);
+    }
+
+    public HashMap<String,Object> updateUserById(Long userId, User user)throws BusinessException,UnsupportedEncodingException {
+        User foundUser=userRepository.findById(userId).orElseThrow(
+                ()->new BusinessException("Current user is not exist")
+        );
+        foundUser.update(user);
+        User userNew=userRepository.save(foundUser);
+        userNew.hidePassword();
+        return new HashMap<String, Object>(){{
+            put("token",JwtUtil.build(userNew));
+            put("user",userNew);
+        }};
+    }
 }
