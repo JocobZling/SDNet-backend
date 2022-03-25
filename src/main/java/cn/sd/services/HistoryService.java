@@ -1,7 +1,7 @@
 package cn.sd.services;
 
 import cn.sd.entities.Detection;
-import cn.sd.services.repositories.HistoryRepository;
+import cn.sd.repositories.HistoryRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
