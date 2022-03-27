@@ -45,7 +45,8 @@ public class Detection {
 
     @JsonProperty("endTime")
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
-    private Date endTime = new Date();
+    private Date
+            endTime = new Date();
 
     @JsonProperty("createTime")
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")

@@ -142,7 +142,7 @@ public class FaceService {
         long len = redisTemplate.opsForList().size(detectId.toString());
         if (!redisTemplate.hasKey(detectId.toString())) {
             return new HashMap<String, Object>() {{
-                put("textAreaValue", "");
+                put("textAreaValue", new String[0]);
                 put("flag", "go on");
             }};
         }
