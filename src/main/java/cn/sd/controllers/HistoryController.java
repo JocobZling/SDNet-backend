@@ -20,12 +20,13 @@ import java.util.HashMap;
 //import java.awt.print.Pageable;
 
 @RestController
-@RequestMapping(value = "/face")
+@RequestMapping(value = "/api/history")
 
 public class HistoryController {
 
 
     private final HistoryService historyService;
+
     // 构造方法
     @Autowired
     public HistoryController(HistoryService historyService) {
@@ -41,17 +42,12 @@ public class HistoryController {
 //    public ResponseEntity<HashMap<String, Object>> getFaceHistoryByUserId(@RequestBody Detection History) throws BusinessException, UnsupportedEncodingException {
 //        return ResponseEntity.ok(HistoryService.findhistory(History.getUserId()));
 
-    @GetMapping(value="/getFaceHistory/pageable")
-    public ResponseEntity getFaceHistoryByUserId(@PageableDefault(sort={"id"},direction= Sort.Direction.DESC)Pageable pageable,
-                                                 @RequestParam(required = false) Long userId
-    )  {
-        Page basicPage=historyService.getObjectivePageable(pageable,userId);
-        return new ResponseEntity<>(basicPage,HttpStatus.OK);
-
+    @GetMapping(value = "/face/pageable/{userId}")
+    public ResponseEntity getFaceHistoryByUserId(@PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable,
+                                                 @PathVariable(required = false) Long userId) {
+        Page basicPage = historyService.getObjectivePageable(pageable, userId);
+        return new ResponseEntity<>(basicPage, HttpStatus.OK);
     }
-
-
-
 }
 
 

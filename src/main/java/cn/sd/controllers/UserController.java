@@ -4,8 +4,6 @@ import cn.sd.entities.User;
 import cn.sd.entities.vo.UserEmailAndPassword;
 import cn.sd.exceptions.BusinessException;
 import cn.sd.services.UserCenterService;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
