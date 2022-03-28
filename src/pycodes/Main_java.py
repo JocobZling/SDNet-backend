@@ -1653,7 +1653,7 @@ if __name__ == '__main__':
                                      conv4_2_1, bn4_2_1, conv4_2_2, bn4_2_2, conv4_2_3, bn4_2_3,
                                      conv4_3_1, bn4_3_1, conv4_3_2, bn4_3_2, conv4_3_3, bn4_3_3, fc, detectionId)
 
-    net_path = r'D:\project\SDNet\SDNet-backend\src\pycodes\model\deepfakeepoch13.pkl'
+    net_path = r'D:\SDNet-backend\src\pycodes\model\deepfakeepoch13.pkl'
 
     resnet50 = torchvision.models.resnet50(pretrained=False)
     fc_featrue = resnet50.fc.in_features
