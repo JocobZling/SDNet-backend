@@ -120,7 +120,6 @@ public class FaceService {
             proc = Runtime.getRuntime().exec(arguments);
             BufferedReader in = new BufferedReader(new InputStreamReader(proc.getInputStream()));
             String line = null;
-
             while ((line = in.readLine()) != null) {
                 System.out.println(line);
                 result.add(line);
@@ -130,6 +129,7 @@ public class FaceService {
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
+
         detection.setResult(result.get(0) + ";" + result.get(1));
         detectionRepository.save(detection);
         DetectResultDisplayVo detectDisplayResult = new DetectResultDisplayVo();

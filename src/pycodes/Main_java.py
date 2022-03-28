@@ -193,7 +193,7 @@ def random_c():
 def getModel():
     resNet50 = MyResNet50.ResNet50()
     resNet50.load_state_dict(
-        torch.load(r'D:\project\SDNet\SDNet-backend\src\pycodes\model\deepfakeepoch13.pkl', map_location='cpu'))
+        torch.load(r'D:\SDNet-backend\src\pycodes\model\deepfakeepoch13.pkl', map_location='cpu'))
     return resNet50
 
 
