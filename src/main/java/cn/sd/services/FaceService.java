@@ -12,6 +12,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.xml.crypto.Data;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
@@ -114,6 +115,7 @@ public class FaceService {
 
         Process proc;
         LinkedList<String> result = new LinkedList<>();
+        Date startTime = new Date();
         try {
             //此处的python环境
             String[] arguments = new String[]{environmentPosition, detectionPosition, originalImage, detectionId.toString()};
@@ -129,7 +131,9 @@ public class FaceService {
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
-
+        Date endTime = new Date();
+        detection.setStartTime(startTime);
+        detection.setEndTime(endTime);
         detection.setResult(result.get(0) + ";" + result.get(1));
         detectionRepository.save(detection);
         DetectResultDisplayVo detectDisplayResult = new DetectResultDisplayVo();

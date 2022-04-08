@@ -40,11 +40,11 @@ public class Detection {
     private Long typeId;
 
     @JsonProperty("startTime")
-    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
+    @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss", timezone = "GMT+8")
     private Date startTime = new Date();
 
     @JsonProperty("endTime")
-    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
+    @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss", timezone = "GMT+8")
     private Date
             endTime = new Date();
 
