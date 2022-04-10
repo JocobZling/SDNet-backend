@@ -5,6 +5,7 @@ import cn.sd.entities.vo.DetectResultDisplayVo;
 import cn.sd.entities.vo.ImageDisplayVo;
 import cn.sd.exceptions.BusinessException;
 import cn.sd.repositories.DetectionRepository;
+import cn.sd.utils.Base64Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 
@@ -159,7 +160,9 @@ public class FaceService {
             Detection detection = detectionRepository.findById(detectId).orElseThrow(() -> new BusinessException("检测失败，请重新上传加密图片!"));
             String result = detection.getResult();
             if (result != null) {
+                String originalBase64 = Base64Util.encryptToBase64(uploadAddr + "/" + detection.getOriginalImagePosition().split("/images/")[1]);
                 return new HashMap<String, Object>() {{
+                    put("originalBase64", originalBase64);
                     put("textAreaValue", redisTemplate.opsForList().range(detectId.toString(), 0, -1));
                     put("flag", "STOP");
                     put("result", result.split(";"));
