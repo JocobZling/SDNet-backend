@@ -41,6 +41,17 @@ public class UserController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
+    @PostMapping("/testregist")
+    public ResponseEntity testRegister(@RequestBody UserEmailAndPassword userInfo) throws BusinessException, UnsupportedEncodingException {
+        System.out.println(userInfo.getEmail());
+        Boolean isUserExits = userCenterService.isUserExits(userInfo.getEmail());
+        System.out.println(isUserExits);
+        if (isUserExits) {
+            return ResponseEntity.ok(userCenterService.findUserByEmailAndPasswordOrThrow(userInfo.getEmail(), userInfo.getPassword()));
+        }
+        return new ResponseEntity<>("用户还未注册", HttpStatus.BAD_REQUEST);
+    }
+
     @PutMapping("/password/{userId}")
     public ResponseEntity updatePassword(@PathVariable Long userId,@RequestBody Map passwordMap){
 
