@@ -13,7 +13,6 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.xml.crypto.Data;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
@@ -47,6 +46,21 @@ public class FaceService {
         this.detectionRepository = detectionRepository;
     }
 
+    public ImageDisplayVo uploadVideo(MultipartFile file, Long userId) throws Exception {
+        //上传图片
+        assert file != null;
+        String videoPath = uploadVideo(file, uploadAddr, Objects.requireNonNull(file.getOriginalFilename()));
+        Detection detection = new Detection();
+        ImageDisplayVo videoDisplayVo = new ImageDisplayVo();
+
+        detection.setUserId(userId);
+        assert videoPath != null;
+        detection.setOriginalImagePosition(imageUrl + videoPath.split(uploadAddr + "/")[1]);
+        videoDisplayVo.setOriginalImagePosition(imageUrl + videoPath.split(uploadAddr + "/")[1]);
+        Detection result = detectionRepository.save(detection);
+        videoDisplayVo.setDetectionId(result.getId());
+        return videoDisplayVo;
+    }
 
     public ImageDisplayVo encryptedImage(MultipartFile file, Long userId) throws Exception {
         //上传图片
@@ -90,6 +104,21 @@ public class FaceService {
             e.printStackTrace();
         }
         return null;
+    }
+
+    private String uploadVideo(MultipartFile file, String path, String fileName) throws Exception {
+        // 生成新的文件名
+        String realPath = "";
+
+        realPath = path + "/" + UUID.randomUUID().toString().replace("-", "") + fileName.substring(fileName.lastIndexOf("."));
+        File dest = new File(realPath);
+        // 判断文件父目录是否存在
+        if (!dest.getParentFile().exists()) {
+            dest.getParentFile().mkdir();
+        }
+        // 保存文件
+        file.transferTo(dest);
+        return realPath;
     }
 
     private String[] upload(MultipartFile file, String path, String fileName) throws Exception {
