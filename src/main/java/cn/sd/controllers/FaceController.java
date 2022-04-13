@@ -32,13 +32,13 @@ public class FaceController {
         return ResponseEntity.ok(faceService.uploadVideo(file, userId));
     }
 
-    @GetMapping("/faceDetection/{detectionId}/{userId}")
-    public ResponseEntity<?> faceDetect(@PathVariable Long detectionId, @PathVariable Long userId) throws BusinessException {
-        return ResponseEntity.ok(faceService.getDetectResult(detectionId));
+    @GetMapping("/faceDetection/{detectionId}/{type}")
+    public ResponseEntity<?> faceDetect(@PathVariable Long detectionId, @PathVariable String type) throws BusinessException {
+        return ResponseEntity.ok(faceService.getDetectResult(detectionId, type));
     }
 
-    @GetMapping("/detectionDetail/{detectionId}")
-    public ResponseEntity<?> getDetectDetail(@PathVariable Long detectionId) throws BusinessException {
-        return ResponseEntity.ok(faceService.getDetectionDetail(detectionId));
+    @GetMapping("/detectionDetail/{detectionId}/{type}")
+    public ResponseEntity<?> getDetectDetail(@PathVariable Long detectionId, @PathVariable String type) throws BusinessException {
+        return ResponseEntity.ok(faceService.getDetectionDetail(detectionId, type));
     }
 }

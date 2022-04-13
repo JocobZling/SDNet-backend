@@ -37,6 +37,9 @@ public class FaceService {
     @Value("${encryptedImagePosition}")
     private String encryptedImagePosition;
 
+    @Value("${videoDetectionPosition}")
+    private String videoDetectionPosition;
+
     @Autowired
     private RedisTemplate redisTemplate;
 
@@ -86,7 +89,6 @@ public class FaceService {
     }
 
     private String[] getPythonResult(String[] imagePath) {
-
         Process proc;
         try {
             //此处的python环境
@@ -138,9 +140,14 @@ public class FaceService {
         return realPath;
     }
 
-    public DetectResultDisplayVo getDetectResult(Long detectionId) throws BusinessException {
-
-        Detection detection = detectionRepository.findById(detectionId).orElseThrow(() -> new BusinessException("检测失败，请重新上传加密图片!"));
+    public DetectResultDisplayVo getDetectResult(Long detectionId, String type) throws BusinessException {
+        String pythonPosition = "";
+        if (type.equals("video")) {
+            pythonPosition = videoDetectionPosition;
+        } else {
+            pythonPosition = detectionPosition;
+        }
+        Detection detection = detectionRepository.findById(detectionId).orElseThrow(() -> new BusinessException("检测失败，请重新上传!"));
         String originalImage = uploadAddr + "/" + detection.getOriginalImagePosition().split("/images/")[1];
 
         Process proc;
@@ -148,7 +155,7 @@ public class FaceService {
         Date startTime = new Date();
         try {
             //此处的python环境
-            String[] arguments = new String[]{environmentPosition, detectionPosition, originalImage, detectionId.toString()};
+            String[] arguments = new String[]{environmentPosition, pythonPosition, originalImage, detectionId.toString()};
             proc = Runtime.getRuntime().exec(arguments);
             BufferedReader in = new BufferedReader(new InputStreamReader(proc.getInputStream()));
             String line = null;
@@ -172,7 +179,8 @@ public class FaceService {
         return detectDisplayResult;
     }
 
-    public HashMap<String, Object> getDetectionDetail(Long detectId) throws BusinessException {
+
+    public HashMap<String, Object> getDetectionDetail(Long detectId, String type) throws BusinessException {
         long len = redisTemplate.opsForList().size(detectId.toString());
         if (!redisTemplate.hasKey(detectId.toString())) {
             return new HashMap<String, Object>() {{
@@ -189,9 +197,12 @@ public class FaceService {
             Detection detection = detectionRepository.findById(detectId).orElseThrow(() -> new BusinessException("检测失败，请重新上传加密图片!"));
             String result = detection.getResult();
             if (result != null) {
-                String originalBase64 = Base64Util.encryptToBase64(uploadAddr + "/" + detection.getOriginalImagePosition().split("/images/")[1]);
+                String originalBase64 = "";
+                if (!type.equals("video"))
+                    originalBase64 = Base64Util.encryptToBase64(uploadAddr + "/" + detection.getOriginalImagePosition().split("/images/")[1]);
+                String finalOriginalBase6 = originalBase64;
                 return new HashMap<String, Object>() {{
-                    put("originalBase64", originalBase64);
+                    put("originalBase64", finalOriginalBase6);
                     put("textAreaValue", redisTemplate.opsForList().range(detectId.toString(), 0, -1));
                     put("flag", "STOP");
                     put("result", result.split(";"));
