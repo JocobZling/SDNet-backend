@@ -67,7 +67,12 @@ public class UserController {
     }
     @PutMapping("/profile/{userId}")
     public ResponseEntity updateUserById(@PathVariable Long userId,@RequestBody User user)throws BusinessException,UnsupportedEncodingException{
-        return new ResponseEntity(userCenterService.updateUserById(userId,user),HttpStatus.OK);
+        Boolean isUserExists = userCenterService.isUserExits(user.getEmail());
+        if(!isUserExists){
+            return new ResponseEntity(userCenterService.updateUserById(userId,user),HttpStatus.OK);
+        }else{
+            return new ResponseEntity<>("邮箱重复！", HttpStatus.BAD_REQUEST);
+        }
     }
 
     @GetMapping("")

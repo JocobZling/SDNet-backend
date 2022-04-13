@@ -1,6 +1,6 @@
 uploadAddr: D:/SDNet-backend/upload
 histPosition: D:/SDNet-backend/src/pycodes/splitAndPlotHist.py
-environmentPosition: D:/Anaconda3//python.exe
+environmentPosition: D:/Anaconda3/python.exe
 encryptedImagePosition: D:/SDNet-backend/src/pycodes/randomImageDisplay.py
 detectionPosition: D:/SDNet-backend/src/pycodes/Main_java.py
 imageUrl: http://127.0.0.1:8080/images/
