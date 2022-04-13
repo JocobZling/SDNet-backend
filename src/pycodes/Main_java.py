@@ -35,7 +35,9 @@ def generate_share2(Conv, a, b, c):
     return A.data, B.data, C.data, V.data, Alpha1.data, Beta1.data
 
 
-def serverSigmoidAll1(u1, c1_mul, c1_res, t1, a1, b1, c1, dict_manager, event1, event2, event3, event4, event5, event6):
+def serverSigmoidAll1(u1, c1_mul, c1_res, t1, a1, b1, c1, dict_manager, event1, event2, event3, event4, event5, event6,
+                      detectionId):
+    rdb = Redis(connection_pool=pool)
     x = torch.exp(-u1)
     A1 = x / c1_mul
 
@@ -52,7 +54,7 @@ def serverSigmoidAll1(u1, c1_mul, c1_res, t1, a1, b1, c1, dict_manager, event1, 
 
     x1 = torch.ones_like(u1) * 1 / 2
     y1 = e_u1 + torch.ones_like(u1) * 1 / 2
-
+    rdb.rpush(detectionId, '> S1:运行SecSigmoid()协议中的SecExp()，更新中间参数A1，A1 = ' + str(A1))
     # div
     # mul
     a1, b1, c1, _, Alpha1, Beta1 = generate_share2(y1, a1, b1, c1)
@@ -73,6 +75,8 @@ def serverSigmoidAll1(u1, c1_mul, c1_res, t1, a1, b1, c1, dict_manager, event1, 
     e4 = dict_manager['e4']
     f4 = dict_manager['f4']
 
+    rdb.rpush(detectionId, '> S1:运行SecSigmoid()协议中的两次SecMul()，更新中间参数e1,f1,e3,f3')
+
     eA = e1 + e2
     fA = f1 + f2
     e = e3 + e4
@@ -82,6 +86,7 @@ def serverSigmoidAll1(u1, c1_mul, c1_res, t1, a1, b1, c1, dict_manager, event1, 
     tx1 = c1 + b1 * e + a1 * f + e * f
 
     dict_manager.update({'ty1': ty1})
+    rdb.rpush(detectionId, '> S1:运行SecSigmoid()协议中的SecDiv()，更新中间参数ty1 = ' + str(ty1))
 
     event6.set()
     event5.wait()
@@ -96,7 +101,9 @@ def serverSigmoidAll1(u1, c1_mul, c1_res, t1, a1, b1, c1, dict_manager, event1, 
     return res1
 
 
-def serverSigmoidAll2(u2, c2_mul, c2_res, t2, a2, b2, c2, dict_manager, event1, event2, event3, event4, event5, event6):
+def serverSigmoidAll2(u2, c2_mul, c2_res, t2, a2, b2, c2, dict_manager, event1, event2, event3, event4, event5, event6,
+                      detectionId):
+    rdb = Redis(connection_pool=pool)
     # exp
     x = torch.exp(-u2)
     A2 = x / c2_mul
@@ -114,6 +121,7 @@ def serverSigmoidAll2(u2, c2_mul, c2_res, t2, a2, b2, c2, dict_manager, event1, 
     x2 = torch.ones_like(u2) * 1 / 2
     y2 = e_u2 + torch.ones_like(u2) * 1 / 2
 
+    rdb.rpush(detectionId, '> S2:运行SecSigmoid()协议中的SecExp()，更新中间参数A2，A2 = ' + str(A2))
     # div
     # mul1
     a2, b2, c2, _, Alpha1, Beta1 = generate_share2(y2, a2, b2, c2)
@@ -132,6 +140,7 @@ def serverSigmoidAll2(u2, c2_mul, c2_res, t2, a2, b2, c2, dict_manager, event1, 
     f1 = dict_manager['f1']
     e3 = dict_manager['e3']
     f3 = dict_manager['f3']
+    rdb.rpush(detectionId, '> S2:运行SecSigmoid()协议中的两次SecMul()，更新中间参数e2,f2,e4,f4')
 
     eA = e1 + e2
     fA = f1 + f2
@@ -142,6 +151,7 @@ def serverSigmoidAll2(u2, c2_mul, c2_res, t2, a2, b2, c2, dict_manager, event1, 
     ty2 = c2 + b2 * eA + a2 * fA
 
     dict_manager.update({'ty2': ty2})
+    rdb.rpush(detectionId, '> S2:运行SecSigmoid()协议中的SecDiv()，更新中间参数ty2 = ' + str(ty2))
 
     event5.set()
     event6.wait()
@@ -168,18 +178,18 @@ def generate_sigmoid_share(input, a1, b1, c1, c1_res, c1_mul, t1):
 
 
 def sigmoidServer1(input, dict_manager, event1, event2, event3, event4, a1, b1, c1, c1_res, c1_mul,
-                   t1, event5, event6):
+                   t1, event5, event6, detectionId):
     (c1_mul_, c1_res_, t1_, a1_, b1_, c1_) = generate_sigmoid_share(input, a1, b1, c1, c1_res, c1_mul, t1)
     sig = serverSigmoidAll1(input.data, c1_mul_, c1_res_, t1_, a1_, b1_, c1_, dict_manager, event1, event2, event3,
-                            event4, event5, event6)
+                            event4, event5, event6, detectionId)
     return sig
 
 
 def sigmoidServer2(input, dict_manager, event1, event2, event3, event4, a2, b2, c2, c2_res, c2_mul,
-                   t2, event5, event6):
+                   t2, event5, event6, detectionId):
     (c2_mul_, c2_res_, t2_, a2_, b2_, c2_) = generate_sigmoid_share(input, a2, b2, c2, c2_res, c2_mul, t2)
     sig = serverSigmoidAll2(input.data, c2_mul_, c2_res_, t2_, a2_, b2_, c2_, dict_manager, event1, event2, event3,
-                            event4, event5, event6)
+                            event4, event5, event6, detectionId)
     return sig
 
 
@@ -230,9 +240,7 @@ def reluForServer1(input, dict_manager, event1, event2, event3, event4, a1, b1, 
     dict_manager.update({'F1': F1})
 
     rdb = Redis(connection_pool=pool)
-    rdb.rpush(detectionId, '> S1:运行ReLU协议中的SecMul()')
-    # print(rdb.lrange(1, 0, -1))
-
+    rdb.rpush(detectionId, '> S1:运行ReLU协议中的SecMul()，更新中间参数F1，F1 = ' + str(F1))
     event4.set()
     event3.wait()
     event2.clear()
@@ -240,7 +248,7 @@ def reluForServer1(input, dict_manager, event1, event2, event3, event4, a1, b1, 
     F_enc = F1 + dict_manager['F2']
     event4.clear()
 
-    rdb.rpush(detectionId, '> S1:获取边缘服务器S2运算结果，进行恢复')
+    rdb.rpush(detectionId, '> S1:获取边缘服务器S2运算结果F2，进行恢复F_enc，F_enc = ' + str(F_enc))
     # print(rdb.lrange(1, 0, -1))
 
     return reluOnCiph(F_enc, input)
@@ -259,7 +267,7 @@ def reluForServer2(input, dict_manager, event1, event2, event3, event4, a2, b2, 
     dict_manager.update({'F2': F2})
 
     rdb = Redis(connection_pool=pool)
-    rdb.rpush(detectionId, '> S2:运行ReLU协议中的SecMul()')
+    rdb.rpush(detectionId, '> S2:运行ReLU协议中的SecMul()，更新中间参数F2，F2 = ' + str(F2))
     # print(rdb.lrange(1, 0, -1))
 
     event3.set()
@@ -268,8 +276,7 @@ def reluForServer2(input, dict_manager, event1, event2, event3, event4, a2, b2, 
 
     F_enc = dict_manager['F1'] + F2
     event3.clear()
-
-    rdb.rpush(detectionId, '> S2:获取边缘服务器S1运算结果，进行恢复')
+    rdb.rpush(detectionId, '> S2:获取边缘服务器S1运算结果，进行恢复F_enc，F_enc = ' + str(F_enc))
     # print(rdb.lrange(1, 0, -1))
 
     return reluOnCiph(F_enc, input)
@@ -300,6 +307,7 @@ def maxPoolForServer1(input, dict_manager, event1, event2, event3, event4, a1, b
 
     rdb = Redis(connection_pool=pool)
     rdb.rpush(detectionId, '> S1:运行SecMaxPooling中的第一次SecMul()')
+
     # print(rdb.lrange(1, 0, -1))
 
     event2.clear()
@@ -642,7 +650,7 @@ def server1_ResNet50(event1, event2, event3, event4, image_1, a1, b1, c1,
     start = datetime.now()
     res1 = fc(res)
     res1 = sigmoidServer1(res1, dict_manager, event1, event2, event3, event4, a1, b1, c1, c1_res, c1_mul,
-                          t1, event5, event6)
+                          t1, event5, event6, detectionId)
     end = datetime.now()
     # print('fc time', end - start)
 
@@ -906,7 +914,7 @@ def server2_ResNet50(event1, event2, event3, event4, image_, a1, b1, c1,
 
     res2 = fc(res)
     res2 = sigmoidServer2(res2, dict_manager, event1, event2, event3, event4, a1, b1, c1, c1_res, c1_mul,
-                          t1, event5, event6)
+                          t1, event5, event6, detectionId)
 
     result2 = res2.detach().numpy()
     result2 = result2[0, 0:2]
@@ -1621,6 +1629,7 @@ if __name__ == '__main__':
     img_path = a[0]
     detectionId = a[1]
 
+    # detectionId = 1
     # img_path = "D:\\pythonStudy\\zlProject\\wuwei\\MultiResNet\\Image\\0000.png"
 
     img = Image.open(img_path)
