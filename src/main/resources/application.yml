@@ -4,11 +4,6 @@ encryptedImagePosition: D:/SDNet-backend/src/pycodes/randomImageDisplay.py
 detectionPosition: D:/SDNet-backend/src/pycodes/Main_java.py
 videoDetectionPosition: D:/SDNet-backend/src/pycodes/videoDetection.py
 
-
-database:
-  url: jdbc:mysql://localhost:3306/sdnet?useUnicode=true&characterEncoding=utf-8
-  username: root
-  password: 'pass'
 spring:
   cloud:
     config:

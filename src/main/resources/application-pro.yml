@@ -1,3 +1,8 @@
-imageUrl: http://chenlab2.vip.aeert.com/images/
-environmentPosition: D:/Anaconda3/envs/zl/python.exe
+imageUrl: http://22d858i464.51mypc.cn:14791/images/
+environmentPosition: D:/anaconda3/python.exe
+
+database:
+  url: jdbc:mysql://localhost:3306/sdnet?useUnicode=true&characterEncoding=utf-8
+  username: root
+  password: 'root'
 
