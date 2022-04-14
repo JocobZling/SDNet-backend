@@ -4,7 +4,6 @@ environmentPosition: D:/Anaconda3/python.exe
 encryptedImagePosition: D:/SDNet-backend/src/pycodes/randomImageDisplay.py
 detectionPosition: D:/SDNet-backend/src/pycodes/Main_java.py
 videoDetectionPosition: D:/SDNet-backend/src/pycodes/videoDetection.py
-imageUrl: http://127.0.0.1:8080/images/
 
 
 database:
@@ -34,6 +33,8 @@ spring:
     multipart:
       max-file-size: 500MB
       max-request-size: 1000MB
+  profiles:
+    active: pro
 
 server:
   port: 8080
