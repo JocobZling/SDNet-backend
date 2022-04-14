@@ -1641,7 +1641,7 @@ if __name__ == '__main__':
     for i in range(1, len(sys.argv)):
         a.append(sys.argv[i])
 
-    image_path = videoToImage(a[0], a[1])
+    image_path = videoToImage(a[0], a[0].split("upload/")[0] + '/upload/')
     batch_size = 5
     detectionId = a[1]
 
@@ -1680,8 +1680,8 @@ if __name__ == '__main__':
                                        conv4_3_1, bn4_3_1, conv4_3_2, bn4_3_2, conv4_3_3, bn4_3_3, fc, detectionId)
 
         net_path = r'D:\SDNet-backend\src\pycodes\model\deepfakeepoch13.pkl'
-        #print(result1)
-        #print(result2)
+        # print(result1)
+        # print(result2)
         res1 = 0
         res2 = 0
         for item in result1:

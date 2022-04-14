@@ -1,6 +1,5 @@
 uploadAddr: D:/SDNet-backend/upload
 histPosition: D:/SDNet-backend/src/pycodes/splitAndPlotHist.py
-environmentPosition: D:/Anaconda3/python.exe
 encryptedImagePosition: D:/SDNet-backend/src/pycodes/randomImageDisplay.py
 detectionPosition: D:/SDNet-backend/src/pycodes/Main_java.py
 videoDetectionPosition: D:/SDNet-backend/src/pycodes/videoDetection.py
@@ -9,7 +8,7 @@ videoDetectionPosition: D:/SDNet-backend/src/pycodes/videoDetection.py
 database:
   url: jdbc:mysql://localhost:3306/sdnet?useUnicode=true&characterEncoding=utf-8
   username: root
-  password: '0911'
+  password: 'pass'
 spring:
   cloud:
     config:
