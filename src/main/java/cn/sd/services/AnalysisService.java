@@ -43,7 +43,7 @@ public class AnalysisService {
         analysisVo.setHistOne(Base64Util.encryptToBase64(imagePathes[4]));
         analysisVo.setHistTwo(Base64Util.encryptToBase64(imagePathes[5]));
 
-        // cleanCache(imagePathes);
+        cleanCache(imagePathes);
 
         return analysisVo;
     }

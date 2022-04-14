@@ -32,13 +32,13 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity registerUser(@RequestBody User info) {
+    public ResponseEntity registerUser(@RequestBody User info) throws UnsupportedEncodingException {
         Boolean isUserExits = userCenterService.isUserExits(info.getEmail());
         if (isUserExits) {
             return new ResponseEntity<>("账户已存在", HttpStatus.BAD_REQUEST);
         }
-        User result = userCenterService.isRegisterUser(info);
-        return new ResponseEntity<>(result, HttpStatus.OK);
+        return ResponseEntity.ok(userCenterService.isRegisterUser(info));
+
     }
 
     @PostMapping("/testregist")

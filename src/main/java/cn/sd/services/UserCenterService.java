@@ -36,12 +36,16 @@ public class UserCenterService {
         }
     }
 
-    public User isRegisterUser(User info) {
+    public HashMap<String, Object> isRegisterUser(User info) throws UnsupportedEncodingException {
         User user = new User();
         user.setEmail(info.getEmail());
         user.setPassword(info.getPassword());
         user.setName(info.getName());
-        return userRepository.save(user);
+        userRepository.save(user);
+        return new HashMap<String, Object>(){{
+            put("token", JwtUtil.build(user));
+            put("user", user.hidePassword());
+        }};
     }
 
     // 只要邮箱不冲突就可以注册
