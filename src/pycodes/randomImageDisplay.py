@@ -7,15 +7,11 @@ import torchvision
 import os
 from torchvision import utils as vutils
 import sys
+import cv2
 
 import numpy
 
 os.environ['KMP_DUPLICATE_LIB_OK'] = 'TRUE'
-
-
-def randomImage(image):
-    image_1 = torch.tensor(np.random.uniform(0, 20, image.shape))
-    return image_1
 
 
 # 读取一张测试
@@ -34,7 +30,14 @@ def readImg(img_path, savePosition1, savePosition2):
     # vutils.save_image(image_2, 'D:\\pythonStudy\\zlProject\\ImageTest\\B_b.png', normalize=False)
     vutils.save_image(image_1, savePosition1, normalize=True)
     vutils.save_image(image_2, savePosition2, normalize=True)
+
+    # 压缩图片
+    img1 = cv2.imread(savePosition1)
+    img2 = cv2.imread(savePosition2)
+    cv2.imwrite(savePosition1, img1, [cv2.IMWRITE_JPEG_QUALITY, 10])
+    cv2.imwrite(savePosition2, img2, [cv2.IMWRITE_JPEG_QUALITY, 10])
     return "ok"
+
 
 img_size = {"B0": 224,
             "B1": 240,

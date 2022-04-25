@@ -135,8 +135,8 @@ public class FaceService {
         }
         // 保存文件
         file.transferTo(dest);
-        realPath[1] = path + "/" + UUID.randomUUID().toString().replace("-", "") + fileName.substring(fileName.lastIndexOf("."));
-        realPath[2] = path + "/" + UUID.randomUUID().toString().replace("-", "") + fileName.substring(fileName.lastIndexOf("."));
+        realPath[1] = path + "/" + UUID.randomUUID().toString().replace("-", "") + ".jpg";
+        realPath[2] = path + "/" + UUID.randomUUID().toString().replace("-", "") + ".jpg";
         return realPath;
     }
 
