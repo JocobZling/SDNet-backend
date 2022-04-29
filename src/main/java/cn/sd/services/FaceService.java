@@ -197,9 +197,9 @@ public class FaceService {
             Detection detection = detectionRepository.findById(detectId).orElseThrow(() -> new BusinessException("检测失败，请重新上传加密图片!"));
             String result = detection.getResult();
             if (result != null) {
-                String originalBase64 = "";
+                String originalBase64 = "video";
                 if (!type.equals("video"))
-                    originalBase64 = Base64Util.encryptToBase64(uploadAddr + "/" + detection.getOriginalImagePosition().split("/images/")[1]);
+                    originalBase64 = detection.getOriginalImagePosition();
                 String finalOriginalBase6 = originalBase64;
                 return new HashMap<String, Object>() {{
                     put("originalBase64", finalOriginalBase6);

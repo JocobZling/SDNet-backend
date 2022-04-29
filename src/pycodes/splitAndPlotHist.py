@@ -19,12 +19,13 @@ def plotHist(img_path, savePosition):
     chans = cv2.split(img)
     linestyles = ('-', ':', '-.')
     plt.figure()
-    font1 = {'family': 'Times New Roman',
-             'weight': 'normal',
+    plt.rcParams['font.sans-serif'] = ['SimHei']
+    plt.rcParams['axes.unicode_minus'] = False
+    font1 = {'weight': 'normal',
              'size': 15,
              }
     plt.xlabel("Pixel Range", font1)
-    plt.ylabel("Pixel Count", font1)
+    plt.ylabel("像素数", font1)
 
     colors = ('r', 'g', 'b')
     for (chan, color, linestyle) in zip(chans, colors, linestyles):
