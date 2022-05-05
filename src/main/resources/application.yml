@@ -3,6 +3,7 @@ histPosition: D:/SDNet-backend/src/pycodes/splitAndPlotHist.py
 encryptedImagePosition: D:/SDNet-backend/src/pycodes/randomImageDisplay.py
 detectionPosition: D:/SDNet-backend/src/pycodes/Main_java.py
 videoDetectionPosition: D:/SDNet-backend/src/pycodes/videoDetection.py
+splicingDetectionPosition: D:/SDNet-backend/src/pycodes/Splicing_Main_java.py
 
 spring:
   cloud:

@@ -40,6 +40,9 @@ public class FaceService {
     @Value("${videoDetectionPosition}")
     private String videoDetectionPosition;
 
+    @Value("${splicingDetectionPosition}")
+    private String splicingDetectionPosition;
+
     @Autowired
     private RedisTemplate redisTemplate;
 
@@ -144,6 +147,8 @@ public class FaceService {
         String pythonPosition = "";
         if (type.equals("video")) {
             pythonPosition = videoDetectionPosition;
+        } else if (type.equals("splicing")) {
+            pythonPosition = splicingDetectionPosition;
         } else {
             pythonPosition = detectionPosition;
         }
@@ -199,7 +204,7 @@ public class FaceService {
             if (result != null) {
                 String originalBase64 = "";
                 if (!type.equals("video"))
-                    originalBase64 = Base64Util.encryptToBase64(uploadAddr + "/" + detection.getOriginalImagePosition().split("/images/")[1]);
+                    originalBase64 = detection.getOriginalImagePosition();
                 String finalOriginalBase6 = originalBase64;
                 return new HashMap<String, Object>() {{
                     put("originalBase64", finalOriginalBase6);
