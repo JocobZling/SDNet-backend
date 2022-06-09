@@ -16,10 +16,13 @@ import java.util.Date;
 @AllArgsConstructor
 @Builder
 @Entity
-public class Detection {
+public class NewDetection {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @JsonProperty("fileName")
+    private String fileName;
 
     @JsonProperty("pictureOnePosition")
     private String pictureOnePosition;

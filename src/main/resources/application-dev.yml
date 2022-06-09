@@ -1,7 +1,7 @@
 imageUrl: http://127.0.0.1:8080/images/
-environmentPosition: D:/anaconda3/envs/zl/python.exe
+environmentPosition: D:/Anaconda3/python.exe
 
 database:
   url: jdbc:mysql://localhost:3306/sdnet?useUnicode=true&characterEncoding=utf-8
   username: root
-  password: 'pass'
+  password: '0911'

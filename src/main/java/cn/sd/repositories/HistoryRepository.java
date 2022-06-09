@@ -1,15 +1,14 @@
 package cn.sd.repositories;
 
-import cn.sd.entities.Detection;
+import cn.sd.entities.NewDetection;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
-import org.springframework.data.domain.Pageable;
-
 // JpaRepository实现简单查询
-public interface HistoryRepository extends PagingAndSortingRepository<Detection, Long> {
-//   @Query("from Detection d where d.userId=1")
-   Page <Detection> findAllByUserId(Pageable pageable, Long userId);
-    }
+public interface HistoryRepository extends PagingAndSortingRepository<NewDetection, Long> {
+    //   @Query("from Detection d where d.userId=1")
+    Page<NewDetection> findAllByUserId(Pageable pageable, Long userId);
+}
 //    List<User> findByEmail(String email);
 

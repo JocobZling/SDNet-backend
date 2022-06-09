@@ -1,6 +1,7 @@
 package cn.sd.services;
 
 import cn.sd.entities.Detection;
+import cn.sd.entities.NewDetection;
 import cn.sd.entities.vo.ImageDisplayVo;
 import cn.sd.repositories.DetectionRepository;
 import org.springframework.beans.factory.annotation.Value;
@@ -42,9 +43,10 @@ public class SplicingService {
         //调用python文件加密图片
         String[] imagePathes = getPythonResult(imagePath);
 
-        Detection detection = new Detection();
+        NewDetection detection = new NewDetection();
         ImageDisplayVo imageDisplayVo = new ImageDisplayVo();
         detection.setUserId(userId);
+        detection.setFileName(Objects.requireNonNull(file.getOriginalFilename()));
 
         assert imagePathes != null;
         detection.setPictureOnePosition(imageUrl + imagePathes[1].split(uploadAddr + "/")[1]);

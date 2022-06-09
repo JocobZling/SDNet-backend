@@ -1,36 +1,35 @@
 package cn.sd.services;
 
-import cn.sd.entities.Detection;
+import cn.sd.entities.NewDetection;
 import cn.sd.repositories.HistoryRepository;
-import org.springframework.data.domain.Page;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import org.springframework.data.domain.Pageable;
-
 @Service
 public class HistoryService {
 
-    private   HistoryRepository historyRepository ;
+    private HistoryRepository historyRepository;
     @PersistenceContext
-    private  EntityManager em;
+    private EntityManager em;
 
     @Autowired
-    public HistoryService(HistoryRepository historyRepository ) {
-        this.historyRepository = historyRepository ;
+    public HistoryService(HistoryRepository historyRepository) {
+        this.historyRepository = historyRepository;
     }
 
 
+    public Page getObjectivePageable(Pageable pageable, Long userId) {
 
-    public  Page getObjectivePageable(Pageable pageable, Long userId){
-
-        Page<Detection> objectivePage=getObjectivePage(pageable,userId);
+        Page<NewDetection> objectivePage = getObjectivePage(pageable, userId);
         return objectivePage;
     }
-    public  Page<Detection> getObjectivePage(Pageable pageable, Long userId){
+
+    public Page<NewDetection> getObjectivePage(Pageable pageable, Long userId) {
 //        CriteriaBuilder criteriaBuilder =em.getCriteriaBuilder();
 //        CriteriaQuery<Detection> criteriaQuery = criteriaBuilder.createQuery(Detection.class);
 //        Root<Detection> detection = criteriaQuery.from(Detection.class);
@@ -49,12 +48,4 @@ public class HistoryService {
 //           // .toArray(new Predicate[predicates.size()])
 //            });
     }
-
-
-
-
-
-
-
-
 }

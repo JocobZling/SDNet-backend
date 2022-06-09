@@ -1,11 +1,11 @@
 package cn.sd.services;
 
 import cn.sd.entities.Detection;
+import cn.sd.entities.NewDetection;
 import cn.sd.entities.vo.DetectResultDisplayVo;
 import cn.sd.entities.vo.ImageDisplayVo;
 import cn.sd.exceptions.BusinessException;
 import cn.sd.repositories.DetectionRepository;
-import cn.sd.utils.Base64Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 
@@ -53,14 +53,15 @@ public class FaceService {
         //上传图片
         assert file != null;
         String videoPath = uploadVideo(file, uploadAddr, Objects.requireNonNull(file.getOriginalFilename()));
-        Detection detection = new Detection();
+        NewDetection detection = new NewDetection();
         ImageDisplayVo videoDisplayVo = new ImageDisplayVo();
+        detection.setFileName(Objects.requireNonNull(file.getOriginalFilename()));
 
         detection.setUserId(userId);
         assert videoPath != null;
         detection.setOriginalImagePosition(imageUrl + videoPath.split(uploadAddr + "/")[1]);
         videoDisplayVo.setOriginalImagePosition(imageUrl + videoPath.split(uploadAddr + "/")[1]);
-        Detection result = detectionRepository.save(detection);
+        NewDetection result = detectionRepository.save(detection);
         videoDisplayVo.setDetectionId(result.getId());
         return videoDisplayVo;
     }
@@ -72,9 +73,10 @@ public class FaceService {
         //调用python文件加密图片
         String[] imagePathes = getPythonResult(imagePath);
 
-        Detection detection = new Detection();
+        NewDetection detection = new NewDetection();
         ImageDisplayVo imageDisplayVo = new ImageDisplayVo();
         detection.setUserId(userId);
+        detection.setFileName(Objects.requireNonNull(file.getOriginalFilename()));
 
         assert imagePathes != null;
         detection.setPictureOnePosition(imageUrl + imagePathes[1].split(uploadAddr + "/")[1]);
@@ -83,7 +85,7 @@ public class FaceService {
         imageDisplayVo.setOriginalImagePosition(imageUrl + imagePathes[0].split(uploadAddr + "/")[1]);
         imageDisplayVo.setPictureOnePosition(imageUrl + imagePathes[1].split(uploadAddr + "/")[1]);
         imageDisplayVo.setPictureTwoPosition(imageUrl + imagePathes[2].split(uploadAddr + "/")[1]);
-        Detection result = detectionRepository.save(detection);
+        NewDetection result = detectionRepository.save(detection);
         imageDisplayVo.setDetectionId(result.getId());
         return imageDisplayVo;
     }
@@ -147,7 +149,7 @@ public class FaceService {
         } else {
             pythonPosition = detectionPosition;
         }
-        Detection detection = detectionRepository.findById(detectionId).orElseThrow(() -> new BusinessException("检测失败，请重新上传!"));
+        NewDetection detection = detectionRepository.findById(detectionId).orElseThrow(() -> new BusinessException("检测失败，请重新上传!"));
         String originalImage = uploadAddr + "/" + detection.getOriginalImagePosition().split("/images/")[1];
 
         Process proc;
@@ -194,7 +196,7 @@ public class FaceService {
                 put("flag", "go on");
             }};
         } else {
-            Detection detection = detectionRepository.findById(detectId).orElseThrow(() -> new BusinessException("检测失败，请重新上传加密图片!"));
+            NewDetection detection = detectionRepository.findById(detectId).orElseThrow(() -> new BusinessException("检测失败，请重新上传加密图片!"));
             String result = detection.getResult();
             if (result != null) {
                 String originalBase64 = "video";
